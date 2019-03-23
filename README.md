@@ -1,11 +1,14 @@
-=======================
+***********************
 *_PROD_BY_GLEBANISTER_*
-=======================
+***********************
 
 To install:
 
 	-Linux:
-		-Run doall.sh
+		-install g++
+		-install libsdl2 (apt-get install libsdl2-dev)
+		-install libsdl2-image-dev (apt-get install libsdl2-dev)
+		-make -f MakeFile
 	-Windows:
 		-Sorry, but no
 
@@ -14,7 +17,7 @@ To change settings:
 
 	-Go to the include/Environment.h
 	-Change anything you want
-	-"bash build.sh" to apply changes
+	-"make -f MakeFile" to apply changes
 
 
 To change background:
@@ -25,7 +28,7 @@ To change background:
 
 To run:
 
-	-"bash run.sh" or "./main" 
+	-"./main" 
 
 To explore:
 
