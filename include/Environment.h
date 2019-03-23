@@ -25,8 +25,11 @@ class Environment {
         const double MAX_MASS = 300;
         const double GR_CONST = 20.0;
         const double COLLISION_CONTROL = 1000.0;
+        const double SPEED_COEFFICENT = 0.1;
         const bool STAY_INSIDE = false;
         const bool BOUNCES_OFF_THE_WALLS = true;
+        const bool PAUSE_INTERACTION = false;
+        const bool PAUSE_GAME = true;
 };
 
 #endif

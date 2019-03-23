@@ -180,7 +180,7 @@ void updateAllAcc(std::vector<Object> &objs, const double G, int PIXELS_IN_UNIT,
             r = std::max(r, COLLISION_CONTROL);
             double a = G * (objs[j].getM()) / r;
 
-            r = sqrt(r); // R
+            r = sqrt(r);            // R
             double ax = a * dx / r; // a * cos
             double ay = a * dy / r;
 
@@ -194,5 +194,14 @@ void updateAllAcc(std::vector<Object> &objs, const double G, int PIXELS_IN_UNIT,
         // {
         //     objs[i].setX()
         // }
+    }
+}
+
+void annulAllAcc(std::vector<Object> &objs)
+{
+    for (Object &obj : objs)
+    {
+        obj.setAX(0);
+        obj.setAY(0);
     }
 }

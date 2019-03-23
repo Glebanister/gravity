@@ -18,7 +18,6 @@ void close()
 
 int main()
 {
-    bool exitGame = false;
     SDL_Renderer *renderer = SDL_CreateRenderer(env.window, -1, SDL_RENDERER_ACCELERATED);
     SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
     std::vector<Object> objs;
@@ -27,6 +26,10 @@ int main()
     Object newCircle;
     SDL_Texture *bg = tryLoadTexture(env.BACKGROUND_PATH, renderer);
 
+    bool exitGame = false;
+    bool pauseInteraction = env.PAUSE_INTERACTION;
+    bool pauseGame = env.PAUSE_GAME;
+
     while (!exitGame)
     {
         while (SDL_PollEvent(&ev))
@@ -34,6 +37,18 @@ int main()
             if (ev.type == SDL_QUIT)
             {
                 exitGame = true;
+            }
+            else if (ev.type == SDL_KEYDOWN)
+            {
+                // std::cout << ev.key.keysym.sym << std::endl;
+                if (ev.key.keysym.sym == 100)
+                {
+                    pauseInteraction ^= 1;
+                }
+                else if (ev.key.keysym.sym == 112)
+                {
+                    pauseGame ^= 1;
+                }
             }
             else if (ev.type == SDL_MOUSEBUTTONDOWN)
             {
@@ -56,6 +71,10 @@ int main()
                 circleOnCreate = false;
                 newCircle.onCreate = false;
                 newCircle.annul();
+                int xMouse, yMouse;
+                SDL_GetMouseState(&xMouse, &yMouse);
+                newCircle.setVX(env.SPEED_COEFFICENT * (newCircle.getX() - xMouse));
+                newCircle.setVY(env.SPEED_COEFFICENT * (newCircle.getY() - yMouse));
                 objs.push_back(newCircle);
             }
         }
@@ -63,16 +82,30 @@ int main()
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, bg, NULL, NULL);
 
-        updateAllAcc(objs, env.GR_CONST, env.PIXELS_IN_UNIT, env.COLLISION_CONTROL);
+        if (!pauseInteraction)
+        {
+            updateAllAcc(objs, env.GR_CONST, env.PIXELS_IN_UNIT, env.COLLISION_CONTROL);
+        }
+        else
+        {
+            annulAllAcc(objs);
+        }
+        
 
         for (Object &planet : objs)
-        {
-            planet.updatePhysics();
+        {   
+            if (!pauseGame)
+                planet.updatePhysics();
             planet.render(renderer);
         }
 
+
         if (circleOnCreate)
         {
+            int xMouse, yMouse;
+            SDL_GetMouseState(&xMouse, &yMouse);
+            SDL_SetRenderDrawColor(renderer, env.RED, env.GREEN, env.BLUE, 0xFF);
+            SDL_RenderDrawLine(renderer, xMouse, yMouse, newCircle.getX(), newCircle.getY());
             newCircle.setM(newCircle.getM() + env.INC_DELTA * newCircle.getMassInc());
             if (newCircle.getMassInc() > 0)
                 newCircle.setM(std::min(newCircle.getM(), env.MAX_MASS));
