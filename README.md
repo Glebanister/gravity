@@ -1,6 +1,4 @@
-*************************
-**_PROD_BY_GLEBANISTER_**
-*************************
+*_PROD_BY_GLEBANISTER_*
 
 To install:
 
@@ -29,6 +27,8 @@ To run:
 
 To explore:
 
+	-Left mouse button to positive weight
+	-Riht mouse button to negative weight
 	-Short click to create light ball
 	-Long click to create heavy ball
 	-Very long click to very heavy ball

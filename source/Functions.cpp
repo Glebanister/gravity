@@ -178,7 +178,7 @@ void updateAllAcc(std::vector<Object> &objs, const double G, int PIXELS_IN_UNIT,
 
             double r = dx * dx + dy * dy; // R^2
             r = std::max(r, COLLISION_CONTROL);
-            double a = G * objs[j].getM() / r;
+            double a = G * (objs[j].getM()) / r;
 
             r = sqrt(r); // R
             double ax = a * dx / r; // a * cos

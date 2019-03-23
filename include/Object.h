@@ -7,8 +7,8 @@
 class Object
 {
   private:
-    double x, y, vx, vy, ax, ay, r;
-    double m;
+    double x, y, vx, vy, ax, ay, r, m;
+    int massInc;
     Environment *env;
 
   public:
@@ -29,6 +29,7 @@ class Object
     double getVY();
     double getR();
     double getM();
+    int getMassInc();
 
     void setX(double);
     void setY(double);
@@ -39,6 +40,8 @@ class Object
     void setR(double);
     void setM(double);
     void setEnvironment(Environment *);
+    void setMassIncPos();
+    void setMassIncNeg();
 };
 
 #endif

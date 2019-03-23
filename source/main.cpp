@@ -44,8 +44,12 @@ int main()
                 newCircle.setX(xMouse);
                 newCircle.setY(yMouse);
                 newCircle.setR(env.RADIUS);
-                newCircle.setM(env.MIN_MASS);
                 newCircle.setEnvironment(&env);
+                if (ev.button.button == SDL_BUTTON_LEFT)
+                    newCircle.setMassIncPos();
+                else
+                    newCircle.setMassIncNeg();
+                newCircle.setM(env.MIN_MASS * newCircle.getMassInc());
             }
             else if (ev.type == SDL_MOUSEBUTTONUP)
             {
@@ -69,8 +73,12 @@ int main()
 
         if (circleOnCreate)
         {
-            newCircle.setM(newCircle.getM() + env.INC_DELTA);
-            newCircle.setM(std::min(newCircle.getM() + env.INC_DELTA, env.MAX_MASS));
+            newCircle.setM(newCircle.getM() + env.INC_DELTA * newCircle.getMassInc());
+            if (newCircle.getMassInc() > 0)
+                newCircle.setM(std::min(newCircle.getM(), env.MAX_MASS));
+            else
+                newCircle.setM(std::max(newCircle.getM(), -env.MAX_MASS));
+
             newCircle.render(renderer);
         }
 

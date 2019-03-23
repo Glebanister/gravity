@@ -11,11 +11,22 @@ Object::Object(double xNew, double yNew, Environment *envNew)
 
 void Object::render(SDL_Renderer *renderer)
 {
-    fillCircle(renderer, x, y, r,
-               255 - 255 * (m - env->MIN_MASS) / (env->MAX_MASS - env->MIN_MASS),
-               env->GREEN,
-               255 * (m - env->MIN_MASS) / (env->MAX_MASS - env->MIN_MASS),
-               0xFF);
+    if (massInc > 0)
+    {
+        fillCircle(renderer, x, y, r,
+                   env->RED,
+                   env->GREEN - env->GREEN * (m - env->MIN_MASS) / (env->MAX_MASS - env->MIN_MASS),
+                   env->BLUE - env->BLUE * (m - env->MIN_MASS) / (env->MAX_MASS - env->MIN_MASS),
+                   0xFF);
+    }
+    else
+    {
+        fillCircle(renderer, x, y, r,
+                   env->RED - env->RED * (-m - env->MIN_MASS) / (env->MAX_MASS - env->MIN_MASS),
+                   env->GREEN - env->GREEN * (-m - env->MIN_MASS) / (env->MAX_MASS - env->MIN_MASS),
+                   env->BLUE,
+                   0xFF);
+    }
 }
 
 void Object::updatePhysics()
@@ -26,6 +37,10 @@ void Object::updatePhysics()
         vy += ay;
         x += vx;
         y += vy;
+    }
+    else
+    {
+        return;
     }
     if (env->BOUNCES_OFF_THE_WALLS)
     {
@@ -68,6 +83,8 @@ void Object::annul()
     vx = vy = ax = ay = 0;
 }
 
+int Object::getMassInc() { return massInc; }
+
 double Object::getX() { return x; }
 double Object::getY() { return y; }
 double Object::getAX() { return ax; }
@@ -86,3 +103,5 @@ void Object::setVY(double vyNew) { vy = vyNew; }
 void Object::setR(double rNew) { r = rNew; }
 void Object::setM(double mNew) { m = mNew; }
 void Object::setEnvironment(Environment *envNew) { env = envNew; }
+void Object::setMassIncNeg() { massInc = -1; }
+void Object::setMassIncPos() { massInc = 1; }
