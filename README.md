@@ -42,7 +42,9 @@ Settings:
 	SCREEN_HEIGHT = 768; - screen height
 	GAME_DELAY = 15; - pause between frames
 	RADIUS = 10; - object radius
-	GREEN = 20; - green component
+	RED = 255; - red component
+	GREEN = 255; - green component
+	BLUE = 255; - blue compunent
 	INC_DELTA = 1; - mass increasing speed
 	PIXELS_IN_UNIT = 100; - useless
 	MIN_MASS = 1; - minimall weight

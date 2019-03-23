@@ -21,14 +21,12 @@ class Environment {
         const int BLUE = 255;
         const int INC_DELTA = 2;
         const int PIXELS_IN_UNIT = 100;
-        // const double SDEED_REDUCE = 2;
         const double MIN_MASS = 1;
         const double MAX_MASS = 300;
         const double GR_CONST = 20.0;
         const double COLLISION_CONTROL = 1000.0;
         const bool STAY_INSIDE = false;
         const bool BOUNCES_OFF_THE_WALLS = true;
-        // const bool SPACE_RESISTANCE = true;
 };
 
 #endif
