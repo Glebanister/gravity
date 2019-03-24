@@ -1,13 +1,18 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <vector>
 #include <algorithm>
 #include <cmath>
 #include "../include/Object.h"
 #include "../include/Functions.h"
 #include "../include/Environment.h"
+#include "../include/Button.h"
+#include "../include/Text.h"
 
 Environment env;
+SDL_Renderer *renderer;
+bool exitGame = false;
 
 void close()
 {
@@ -16,17 +21,22 @@ void close()
     SDL_Quit();
 }
 
-int main()
+void init()
 {
-    SDL_Renderer *renderer = SDL_CreateRenderer(env.window, -1, SDL_RENDERER_ACCELERATED);
+    renderer = SDL_CreateRenderer(env.window, -1, SDL_RENDERER_ACCELERATED);
     SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+}
+
+void mainActivity()
+{
+    init();
+    SDL_RenderClear(renderer);
     std::vector<Object> objs;
     SDL_Event ev;
     bool circleOnCreate = false;
     Object newCircle;
     SDL_Texture *bg = tryLoadTexture(env.BACKGROUND_PATH, renderer);
 
-    bool exitGame = false;
     bool pauseInteraction = env.PAUSE_INTERACTION;
     bool pauseGame = env.PAUSE_GAME;
 
@@ -48,6 +58,14 @@ int main()
                 else if (ev.key.keysym.sym == 112)
                 {
                     pauseGame ^= 1;
+                }
+                else if (ev.key.keysym.sym == 99)
+                {
+                    for (Object &obj : objs)
+                    {
+                        obj.~Object();
+                    }
+                    objs.clear();
                 }
             }
             else if (ev.type == SDL_MOUSEBUTTONDOWN)
@@ -90,15 +108,13 @@ int main()
         {
             annulAllAcc(objs);
         }
-        
 
         for (Object &planet : objs)
-        {   
+        {
             if (!pauseGame)
                 planet.updatePhysics();
             planet.render(renderer);
         }
-
 
         if (circleOnCreate)
         {
@@ -118,6 +134,80 @@ int main()
         SDL_RenderPresent(renderer);
         SDL_Delay(env.GAME_DELAY);
     }
+}
 
+void helloScreen()
+{
+    SDL_Event ev;
+    bool continueGame = false;
+
+    Text GravityText(env.FONT, 150, &env);
+    GravityText.setText("Gravity", 100, 100, 150, 255, renderer);
+    GravityText.centerByX(0, env.SCREEN_WIDTH);
+    GravityText.setY(100);
+
+    Button playButton {0, 0, env.PLAY_BUTTON_WIDTH, env.PLAY_BUTTON_HEIGHT, &env};
+    playButton.centerByX(0, env.SCREEN_WIDTH);
+    playButton.centerByY(60, env.SCREEN_HEIGHT);
+    SDL_Texture *playButtonImg = tryLoadTexture(env.PLAY_BUTTON_PATH, renderer);
+    SDL_Texture *helloBg = tryLoadTexture(env.BACKGROUND_PATH, renderer);
+
+    Text gameText(env.FONT, 30, &env);
+    gameText.setText("Game", 100, 100, 150, 255, renderer);
+    gameText.centerByX(0, env.SCREEN_WIDTH);
+    gameText.setY(GravityText.getY() - gameText.getH() + 30);
+
+    Text playText(env.FONT, 50, &env);
+    playText.setText("Play", 70, 70, 120, 255, renderer);
+    playText.centerByX(playButton.getX(), playButton.getX() + playButton.getW());
+    playText.centerByY(playButton.getY(), playButton.getY() + playButton.getH());
+
+    while (!exitGame && !continueGame)
+    {
+        while (SDL_PollEvent(&ev))
+        {
+            if (ev.type == SDL_QUIT)
+            {
+                exitGame = true;
+            }
+            else if (ev.type == SDL_MOUSEBUTTONDOWN)
+            {
+                if (ev.button.button == SDL_BUTTON_LEFT)
+                {
+                    if (playButton.cursorInside())
+                    {
+                        continueGame = true;
+                    }
+                }
+            }
+        }
+
+        SDL_RenderClear(renderer);
+
+        renderTexture(helloBg, 0, 0, env.SCREEN_WIDTH, env.SCREEN_HEIGHT, renderer);
+
+        renderTexture(playButtonImg, playButton.getX(), playButton.getY(), playButton.getW(), playButton.getH(), renderer);
+
+        renderTexture(gameText.texture, gameText.getX(), gameText.getY(), gameText.getW(), gameText.getH(), renderer);
+
+        renderTexture(GravityText.texture, GravityText.getX(), GravityText.getY(), GravityText.getW(), GravityText.getH(), renderer);
+
+        renderTexture(playText.texture, playText.getX(), playText.getY(), playText.getW(), playText.getH(), renderer);
+        
+        SDL_RenderPresent(renderer);
+
+        SDL_Delay(env.GAME_DELAY);
+    }   
+    SDL_DestroyTexture(playButtonImg);
+    SDL_DestroyTexture(helloBg);
+    SDL_RenderClear(renderer);
+    SDL_DestroyRenderer(renderer);
+}
+
+int main()
+{
+    init();
+    helloScreen();
+    mainActivity();
     close();
 }

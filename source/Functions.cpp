@@ -21,7 +21,10 @@ void blitSurface(SDL_Surface *what, int xWhat, int yWhat, int w, int h, SDL_Surf
     src.y = yWhat;
     src.h = h;
     src.w = w;
-    SDL_BlitSurface(what, &src, where, &desc);
+    if (SDL_BlitSurface(what, &src, where, &desc) < 0)
+    {
+        std::cerr << SDL_GetError() << std::endl;
+    }
 }
 
 void blitScaled(SDL_Surface *what, int xWhat, int yWhat, int wWhat, int hWhat, SDL_Surface *where)
@@ -31,7 +34,10 @@ void blitScaled(SDL_Surface *what, int xWhat, int yWhat, int wWhat, int hWhat, S
     stretchRect.y = 0;
     stretchRect.w = wWhat;
     stretchRect.h = hWhat;
-    SDL_BlitScaled(what, NULL, where, &stretchRect);
+    if (SDL_BlitScaled(what, NULL, where, &stretchRect) < 0)
+    {
+        std::cerr << SDL_GetError() << std::endl;
+    }
 }
 
 void clearStack()
@@ -40,11 +46,6 @@ void clearStack()
     while (SDL_PollEvent(&ev))
     {
     };
-}
-
-void updateWindow(SDL_Window *window)
-{
-    SDL_UpdateWindowSurface(window);
 }
 
 SDL_Surface *tryLoadImage(const char path[])
@@ -213,6 +214,12 @@ void renderTexture(SDL_Texture *what, int xWhere, int yWhere, int wWhat, int hWh
     viewport.y = yWhere;
     viewport.w = wWhat;
     viewport.h = hWhat;
-    SDL_RenderSetViewport(renderer, &viewport);
-    SDL_RenderCopy(renderer, what, NULL, NULL);
+    if (SDL_RenderSetViewport(renderer, &viewport) < 0)
+    {
+        std::cerr << SDL_GetError() << std::endl;
+    }
+    if (SDL_RenderCopy(renderer, what, NULL, NULL) < 0)
+    {
+        std::cerr << SDL_GetError() << std::endl;
+    }
 }

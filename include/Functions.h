@@ -25,3 +25,5 @@ void fillCircle(SDL_Renderer *surface, int cx, int cy, int radius, Uint8 r, Uint
 void updateAllAcc(std::vector<Object> &objs, const double G, int PIXELS_IN_UNIT, double COLLISION_CONTROL);
 
 void annulAllAcc(std::vector<Object>&);
+
+void renderTexture(SDL_Texture *what, int xWhere, int yWhere, int wWhat, int hWhat, SDL_Renderer *renderer);

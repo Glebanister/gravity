@@ -42,6 +42,8 @@ class Object
     void setEnvironment(Environment *);
     void setMassIncPos();
     void setMassIncNeg();
+
+    ~Object();
 };
 
 #endif
