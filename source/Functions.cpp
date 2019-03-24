@@ -205,3 +205,14 @@ void annulAllAcc(std::vector<Object> &objs)
         obj.setAY(0);
     }
 }
+
+void renderTexture(SDL_Texture *what, int xWhere, int yWhere, int wWhat, int hWhat, SDL_Renderer *renderer)
+{
+    SDL_Rect viewport;
+    viewport.x = xWhere;
+    viewport.y = yWhere;
+    viewport.w = wWhat;
+    viewport.h = hWhat;
+    SDL_RenderSetViewport(renderer, &viewport);
+    SDL_RenderCopy(renderer, what, NULL, NULL);
+}

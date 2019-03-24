@@ -7,7 +7,8 @@ To install:
 	-Linux:
 		-install g++
 		-install libsdl2 (apt-get install libsdl2-dev)
-		-install libsdl2-image-dev (apt-get install libsdl2-dev)
+		-install libsdl2-image-dev (apt-get install libsdl2-image-dev)
+		-install libsdl2-ttf-dev (apt-get install libsdl2-ttf-dev)
 		-make -f MakeFile
 	-Windows:
 		-Sorry, but no
@@ -35,6 +36,7 @@ To explore:
 	-Press 'P' to start
 	-Press 'P' to pause
 	-Press 'D' to disable interactoin
+	-Press 'C' to clean screen
 	-Left mouse button to positive weight
 	-Riht mouse button to negative weight
 	-Short click to create light ball
@@ -52,7 +54,7 @@ Settings:
 	RADIUS = 10; - object radius
 	RED = 255; - red component
 	GREEN = 255; - green component
-	BLUE = 255; - blue compunent
+	BLUE = 255; - blue component
 	INC_DELTA = 2; - mass increasing speed
 	PIXELS_IN_UNIT = 100; - useless
 	MIN_MASS = 1; - minimall weight

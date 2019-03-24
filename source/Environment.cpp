@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <iostream>
 #include "../include/Environment.h"
 #include "../include/Functions.h"
@@ -15,5 +16,6 @@ Environment::Environment() {
     screen = SDL_GetWindowSurface(window);
     // SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" );
     IMG_Init(IMG_INIT_PNG);
+    TTF_Init();
 }
 

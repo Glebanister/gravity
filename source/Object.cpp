@@ -105,3 +105,8 @@ void Object::setM(double mNew) { m = mNew; }
 void Object::setEnvironment(Environment *envNew) { env = envNew; }
 void Object::setMassIncNeg() { massInc = -1; }
 void Object::setMassIncPos() { massInc = 1; }
+
+Object::~Object()
+{
+    // delete env;
+}
