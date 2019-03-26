@@ -56,7 +56,7 @@ Settings:
 	GREEN = 255; - green component
 	BLUE = 255; - blue component
 	INC_DELTA = 2; - mass increasing speed
-	PIXELS_IN_UNIT = 100; - useless
+	PIXELS_IN_UNIT = 100; - current scale
 	MIN_MASS = 1; - minimall weight
 	MAX_MASS = 300; - maximal wieght
 	GR_CONST = 20.0; - gravitational constant

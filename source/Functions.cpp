@@ -150,7 +150,7 @@ SDL_Texture *tryLoadTexture(const char path[], SDL_Renderer *rend)
     return tex;
 }
 
-void updateAllAcc(std::vector<Object> &objs, const double G, int PIXELS_IN_UNIT, double COLLISION_CONTROL)
+void updateAllAcc(std::vector<Object> &objs, const double G, double PIXELS_IN_UNIT, long double COLLISION_CONTROL)
 {
     // long double M = 0;
     // long double MX = 0;
@@ -179,11 +179,11 @@ void updateAllAcc(std::vector<Object> &objs, const double G, int PIXELS_IN_UNIT,
         {
             if (i == j)
                 continue;
-            long double dx = objs[j].getX() - objs[i].getX();
-            long double dy = objs[j].getY() - objs[i].getY();
+            long double dx = (objs[j].getX() - objs[i].getX()) / PIXELS_IN_UNIT;
+            long double dy = (objs[j].getY() - objs[i].getY()) / PIXELS_IN_UNIT;
 
             long double r = dx * dx + dy * dy; // R^2
-            r = std::max(r, (long double)COLLISION_CONTROL);
+            r = std::max(r, COLLISION_CONTROL);
             long double a = G * (objs[j].getM()) / r;
 
             r = sqrt(r);            // R

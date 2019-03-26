@@ -22,7 +22,7 @@ void DrawCircle(SDL_Renderer *Renderer, int32_t _x, int32_t _y, int32_t radius);
 
 void fillCircle(SDL_Renderer *surface, int cx, int cy, int radius, Uint8 r, Uint8 g, Uint8 b, Uint8 a);
 
-void updateAllAcc(std::vector<Object> &objs, const double G, int PIXELS_IN_UNIT, double COLLISION_CONTROL);
+void updateAllAcc(std::vector<Object> &objs, const double G, double PIXELS_IN_UNIT, long double COLLISION_CONTROL);
 
 void annulAllAcc(std::vector<Object>&);
 
