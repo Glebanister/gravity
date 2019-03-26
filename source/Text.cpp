@@ -33,11 +33,13 @@ void Text::setText(const char t[], int r, int g, int b, int a, SDL_Renderer *ren
     surface = TTF_RenderText_Solid(font, t, cl);
     if (!surface)
     {
+        std::cerr << "Error while TTF_RenderText_Solid" << std::endl;
         std::cerr << SDL_GetError() << std::endl;
     }
     texture = SDL_CreateTextureFromSurface(renderer, surface);
     if (!texture)
     {
+        std::cerr << "Error while SDL_CreateTextureFromSurface" << std::endl;
         std::cerr << SDL_GetError() << std::endl;
     }
     w = surface->w;

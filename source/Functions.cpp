@@ -23,7 +23,7 @@ void blitSurface(SDL_Surface *what, int xWhat, int yWhat, int w, int h, SDL_Surf
     src.w = w;
     if (SDL_BlitSurface(what, &src, where, &desc) < 0)
     {
-        std::cerr << SDL_GetError() << std::endl;
+        std::cerr << "[Error during blitting surface " << SDL_GetError() << ']' << std::endl;
     }
 }
 
@@ -36,7 +36,7 @@ void blitScaled(SDL_Surface *what, int xWhat, int yWhat, int wWhat, int hWhat, S
     stretchRect.h = hWhat;
     if (SDL_BlitScaled(what, NULL, where, &stretchRect) < 0)
     {
-        std::cerr << SDL_GetError() << std::endl;
+        std::cerr <<  "[Error diring blitting scaled " << SDL_GetError() << ']' << std::endl;
     }
 }
 
@@ -53,8 +53,13 @@ SDL_Surface *tryLoadImage(const char path[])
     SDL_Surface *img = IMG_Load(path);
     if (img == NULL)
     {
-        std::cerr << "Unable to load image " << path << std::endl;
+        std::cerr << "[Unable to load image " << path << ' ' << SDL_GetError() << ']' << std::endl;
     }
+    else
+    {
+        std::cerr << "[Image loaded " << path << ']' << std::endl;
+    }
+    
     return img;
 }
 
@@ -174,16 +179,16 @@ void updateAllAcc(std::vector<Object> &objs, const double G, int PIXELS_IN_UNIT,
         {
             if (i == j)
                 continue;
-            double dx = objs[j].getX() - objs[i].getX();
-            double dy = objs[j].getY() - objs[i].getY();
+            long double dx = objs[j].getX() - objs[i].getX();
+            long double dy = objs[j].getY() - objs[i].getY();
 
-            double r = dx * dx + dy * dy; // R^2
-            r = std::max(r, COLLISION_CONTROL);
-            double a = G * (objs[j].getM()) / r;
+            long double r = dx * dx + dy * dy; // R^2
+            r = std::max(r, (long double)COLLISION_CONTROL);
+            long double a = G * (objs[j].getM()) / r;
 
             r = sqrt(r);            // R
-            double ax = a * dx / r; // a * cos
-            double ay = a * dy / r;
+            long double ax = a * dx / r; // a * cos
+            long double ay = a * dy / r;
 
             // objs[i].setVX(objs[i].getVX() + ax * dt);
             // objs[i].setVY(objs[i].getVY() + ay * dt);
@@ -216,10 +221,12 @@ void renderTexture(SDL_Texture *what, int xWhere, int yWhere, int wWhat, int hWh
     viewport.h = hWhat;
     if (SDL_RenderSetViewport(renderer, &viewport) < 0)
     {
-        std::cerr << SDL_GetError() << std::endl;
+        std::cerr << "[Error during setting viewport ";
+        std::cerr << SDL_GetError() << ']' << std::endl;
     }
     if (SDL_RenderCopy(renderer, what, NULL, NULL) < 0)
     {
-        std::cerr << SDL_GetError() << std::endl;
+        std::cerr << "[Error during rendreing ";
+        std::cerr << SDL_GetError() << ']' << std::endl;
     }
 }

@@ -16,15 +16,37 @@ bool exitGame = false;
 
 void close()
 {
-    SDL_DestroyWindow(env.window);
     IMG_Quit();
+    std::cerr << "[Out of IMG]" << std::endl;
+    TTF_Quit();
+    std::cerr << "[Out of TTF]" << std::endl;
+    SDL_DestroyWindow(env.window);
+    std::cerr << "[Window destroyed]" << std::endl;
     SDL_Quit();
+    std::cerr << "[Out of SDL]" << std::endl;
 }
 
 void init()
 {
+    renderer = NULL;
     renderer = SDL_CreateRenderer(env.window, -1, SDL_RENDERER_ACCELERATED);
-    SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+    if (renderer == NULL)
+    {
+        std::cerr << "[Unable to create renderer " << SDL_GetError() << ']' << std::endl;
+    }
+    else
+    {
+        std::cerr << "[Renderer created successfully]" << std::endl;
+    }
+    if (SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF) < 0)
+    {
+        std::cerr << "[Unable to set renderer color " << SDL_GetError() << ']' << std::endl;
+    }
+    else
+    {
+        std::cerr << "[Color set successfully]" << std::endl;
+    }
+    
 }
 
 void mainActivity()
@@ -40,8 +62,12 @@ void mainActivity()
     bool pauseInteraction = env.PAUSE_INTERACTION;
     bool pauseGame = env.PAUSE_GAME;
 
+    std::cerr << "[Main activity started]" << std::endl;
+
     while (!exitGame)
     {
+        // std::cout << exitGame << ' ' << pauseGame << ' ' << pauseInteraction << std::endl;
+        // std::cout << SDL_GetError() << std::endl;
         while (SDL_PollEvent(&ev))
         {
             if (ev.type == SDL_QUIT)
@@ -53,14 +79,33 @@ void mainActivity()
                 // std::cout << ev.key.keysym.sym << std::endl;
                 if (ev.key.keysym.sym == 100)
                 {
-                    pauseInteraction ^= 1;
+                    if (pauseInteraction)
+                    {
+                        pauseInteraction = false;
+                        std::cerr << "[Interaction continued]" << std::endl;
+                    }
+                    else
+                    {
+                        pauseInteraction = true;
+                        std::cerr << "[Interaction paused]" << std::endl;
+                    }
                 }
                 else if (ev.key.keysym.sym == 112)
                 {
-                    pauseGame ^= 1;
+                    if (pauseGame)
+                    {
+                        pauseGame = false;
+                        std::cerr << "[Game continued]" << std::endl;
+                    }
+                    else
+                    {
+                        pauseGame = true;
+                        std::cerr << "[Game paused]" << std::endl;
+                    }
                 }
                 else if (ev.key.keysym.sym == 99)
                 {
+                    std::cerr << "[Screen cleared]" << std::endl;
                     for (Object &obj : objs)
                     {
                         obj.~Object();
@@ -161,6 +206,8 @@ void helloScreen()
     playText.setText("Play", 70, 70, 120, 255, renderer);
     playText.centerByX(playButton.getX(), playButton.getX() + playButton.getW());
     playText.centerByY(playButton.getY(), playButton.getY() + playButton.getH());
+
+    std::cerr << "[Hello screen started]" << std::endl;
 
     while (!exitGame && !continueGame)
     {

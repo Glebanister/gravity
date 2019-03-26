@@ -17,7 +17,7 @@ class Environment {
         const int SCREEN_WIDTH = 800;
         const int SCREEN_HEIGHT = 600;
         const int GAME_DELAY = 15;
-        const int RADIUS = 8;
+        const int RADIUS = 7;
         const int RED = 200;
         const int GREEN = 200;
         const int BLUE = 200;
@@ -27,7 +27,7 @@ class Environment {
         const double INC_DELTA = 2;
         const double MIN_MASS = 1;
         const double MAX_MASS = 300;
-        const double GR_CONST = 8.0;
+        const double GR_CONST = 15.0;
         const double COLLISION_CONTROL = 1000.0;
         const double SPEED_COEFFICENT = 0.1;
         const bool STAY_INSIDE = false;

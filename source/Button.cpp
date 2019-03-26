@@ -4,7 +4,10 @@
 
 Button::Button(){};
 Button::Button(int xNew, int yNew, int wNew, int hNew, Environment *envNew)
-    : x(xNew), y(yNew), w(wNew), h(hNew), env(envNew), xOfButton(0), yOfButton(0){};
+    : x(xNew), y(yNew), w(wNew), h(hNew), env(envNew), xOfButton(0), yOfButton(0)
+{
+    std::cerr << "[Button created]" << std::endl;
+};
 
 bool Button::cursorInside()
 {
