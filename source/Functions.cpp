@@ -1,6 +1,7 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <cmath>
 #include <algorithm>
 #include "../include/Functions.h"
@@ -59,7 +60,7 @@ SDL_Surface *tryLoadImage(const char path[])
     {
         printInfo("Image loaded");
     }
-    
+
     return img;
 }
 
@@ -191,7 +192,7 @@ void updateAllAcc(std::vector<Object> &objs, const double G, double PIXELS_IN_UN
             r = std::max(r, COLLISION_CONTROL);
             long double a = G * (objs[j].getM()) / r;
 
-            r = sqrt(r);            // R
+            r = sqrt(r);                 // R
             long double ax = a * dx / r; // a * cos
             long double ay = a * dy / r;
 
@@ -236,10 +237,23 @@ void renderTexture(SDL_Texture *what, int xWhere, int yWhere, int wWhat, int hWh
 
 void printInfo(const char t[], ...)
 {
-    std::cerr << '[' << t << ']' <<  std::endl;
+    std::cerr << '[' << t << ']' << std::endl;
 }
 
 void printError(const char t[], ...)
 {
     std::cerr << "\033[1;31m" << '[' << t << ' ' << SDL_GetError() << ']' << "\033[0m" << std::endl;
+}
+
+void closeAll(Environment *env)
+{
+    IMG_Quit();
+    printInfo("Out of IMG");
+    TTF_Quit();
+    printInfo("Out of TTF");
+    SDL_DestroyWindow(env->window);
+    printInfo("Window destroyed");
+    SDL_Quit();
+    printInfo("Out of SDL");
+    exit(0);
 }

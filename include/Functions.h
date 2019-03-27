@@ -31,3 +31,5 @@ void renderTexture(SDL_Texture *what, int xWhere, int yWhere, int wWhat, int hWh
 void printInfo(const char t[], ...);
 
 void printError(const char t[], ...);
+
+void closeAll(Environment *env);

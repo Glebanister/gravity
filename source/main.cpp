@@ -14,18 +14,6 @@ Environment env;
 SDL_Renderer *renderer;
 bool exitGame = false;
 
-void close()
-{
-    IMG_Quit();
-    printInfo("Out of IMG");
-    TTF_Quit();
-    printInfo("Out of TTF");
-    SDL_DestroyWindow(env.window);
-    printInfo("Window destroyed");
-    SDL_Quit();
-    printInfo("Out of SDL");
-}
-
 void init()
 {
     renderer = NULL;
@@ -37,6 +25,7 @@ void init()
         if (renderer == NULL)
         {
             printError("Unable to create renderer");
+            closeAll(&env);
         }
         else
         {
@@ -275,5 +264,5 @@ int main()
     init();
     helloScreen();
     mainActivity();
-    close();
+    closeAll(&env);
 }
