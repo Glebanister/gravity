@@ -14,7 +14,8 @@ class Button
   public:
     Button();
     Button(int x, int y, int w, int h, Environment *env);
-    SDL_Texture *img;
+    SDL_Texture *imgUnpressed;
+    SDL_Texture *imgPressed;
 
     void updateTexture();
     void centerByX(int xb, int xe);
@@ -30,6 +31,8 @@ class Button
     int getY();
     int getW();
     int getH();
+
+    ~Button();
 };
 
 #endif

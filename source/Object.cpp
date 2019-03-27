@@ -4,12 +4,15 @@
 #include "../include/Environment.h"
 #include "../include/Functions.h"
 
-Object::Object() {}
+Object::Object()
+{
+    printInfo("New object created");
+}
 
 Object::Object(double xNew, double yNew, Environment *envNew)
     : x(xNew), y(yNew), vx(0), vy(0), ax(0), ay(0), onCreate(false), env(envNew), movable(true)
 {
-    std::cerr << "[New object created]" << std::endl;
+    printInfo("New object created");
 }
 
 void Object::render(SDL_Renderer *renderer)

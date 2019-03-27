@@ -23,7 +23,7 @@ void blitSurface(SDL_Surface *what, int xWhat, int yWhat, int w, int h, SDL_Surf
     src.w = w;
     if (SDL_BlitSurface(what, &src, where, &desc) < 0)
     {
-        std::cerr << "[Error during blitting surface " << SDL_GetError() << ']' << std::endl;
+        printError("Error during blitting surface");
     }
 }
 
@@ -36,7 +36,7 @@ void blitScaled(SDL_Surface *what, int xWhat, int yWhat, int wWhat, int hWhat, S
     stretchRect.h = hWhat;
     if (SDL_BlitScaled(what, NULL, where, &stretchRect) < 0)
     {
-        std::cerr <<  "[Error diring blitting scaled " << SDL_GetError() << ']' << std::endl;
+        printError("Error diring blitting scaled");
     }
 }
 
@@ -53,11 +53,11 @@ SDL_Surface *tryLoadImage(const char path[])
     SDL_Surface *img = IMG_Load(path);
     if (img == NULL)
     {
-        std::cerr << "[Unable to load image " << path << ' ' << SDL_GetError() << ']' << std::endl;
+        printError("Unable to load image");
     }
     else
     {
-        std::cerr << "[Image loaded " << path << ']' << std::endl;
+        printInfo("Image loaded");
     }
     
     return img;
@@ -144,8 +144,13 @@ void fillCircle(SDL_Renderer *surface, int cx, int cy, int radius, Uint8 r, Uint
 
 SDL_Texture *tryLoadTexture(const char path[], SDL_Renderer *rend)
 {
+    SDL_Texture *tex = NULL;
     SDL_Surface *texImg = tryLoadImage(path);
-    SDL_Texture *tex = SDL_CreateTextureFromSurface(rend, texImg);
+    tex = SDL_CreateTextureFromSurface(rend, texImg);
+    if (tex == NULL)
+    {
+        printError("Unable to create texture");
+    }
     SDL_FreeSurface(texImg);
     return tex;
 }
@@ -221,12 +226,20 @@ void renderTexture(SDL_Texture *what, int xWhere, int yWhere, int wWhat, int hWh
     viewport.h = hWhat;
     if (SDL_RenderSetViewport(renderer, &viewport) < 0)
     {
-        std::cerr << "[Error during setting viewport ";
-        std::cerr << SDL_GetError() << ']' << std::endl;
+        printError("Error during setting viewport");
     }
     if (SDL_RenderCopy(renderer, what, NULL, NULL) < 0)
     {
-        std::cerr << "[Error during rendreing ";
-        std::cerr << SDL_GetError() << ']' << std::endl;
+        printError("Error during rendreing");
     }
+}
+
+void printInfo(const char t[], ...)
+{
+    std::cerr << '[' << t << ']' <<  std::endl;
+}
+
+void printError(const char t[], ...)
+{
+    std::cerr << "\033[1;31m" << '[' << t << ' ' << SDL_GetError() << ']' << "\033[0m" << std::endl;
 }

@@ -17,13 +17,13 @@ bool exitGame = false;
 void close()
 {
     IMG_Quit();
-    std::cerr << "[Out of IMG]" << std::endl;
+    printInfo("Out of IMG");
     TTF_Quit();
-    std::cerr << "[Out of TTF]" << std::endl;
+    printInfo("Out of TTF");
     SDL_DestroyWindow(env.window);
-    std::cerr << "[Window destroyed]" << std::endl;
+    printInfo("Window destroyed");
     SDL_Quit();
-    std::cerr << "[Out of SDL]" << std::endl;
+    printInfo("Out of SDL");
 }
 
 void init()
@@ -32,19 +32,29 @@ void init()
     renderer = SDL_CreateRenderer(env.window, -1, SDL_RENDERER_ACCELERATED);
     if (renderer == NULL)
     {
-        std::cerr << "[Unable to create renderer " << SDL_GetError() << ']' << std::endl;
+        printError("Unable to create accelerated renderer");
+        renderer = SDL_CreateRenderer(env.window, -1, SDL_RENDERER_SOFTWARE);
+        if (renderer == NULL)
+        {
+            printError("Unable to create renderer");
+        }
+        else
+        {
+            printInfo("Software renderer created");
+        }
+        
     }
     else
     {
-        std::cerr << "[Renderer created successfully]" << std::endl;
+        printInfo("Accelerated renderer created successfully");
     }
     if (SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF) < 0)
     {
-        std::cerr << "[Unable to set renderer color " << SDL_GetError() << ']' << std::endl;
+        printError("Unable to set renderer color");
     }
     else
     {
-        std::cerr << "[Color set successfully]" << std::endl;
+        printInfo("Color set successfully");
     }
     
 }
@@ -62,7 +72,7 @@ void mainActivity()
     bool pauseInteraction = env.PAUSE_INTERACTION;
     bool pauseGame = env.PAUSE_GAME;
 
-    std::cerr << "[Main activity started]" << std::endl;
+    printInfo("Main activity started");
 
     while (!exitGame)
     {
@@ -82,12 +92,12 @@ void mainActivity()
                     if (pauseInteraction)
                     {
                         pauseInteraction = false;
-                        std::cerr << "[Interaction continued]" << std::endl;
+                        printInfo("Interaction continued");
                     }
                     else
                     {
                         pauseInteraction = true;
-                        std::cerr << "[Interaction paused]" << std::endl;
+                        printInfo("Interaction paused");
                     }
                 }
                 else if (ev.key.keysym.sym == 112)
@@ -95,17 +105,17 @@ void mainActivity()
                     if (pauseGame)
                     {
                         pauseGame = false;
-                        std::cerr << "[Game continued]" << std::endl;
+                        printInfo("Game continued");
                     }
                     else
                     {
                         pauseGame = true;
-                        std::cerr << "[Game paused]" << std::endl;
+                        printInfo("Game paused");
                     }
                 }
                 else if (ev.key.keysym.sym == 99)
                 {
-                    std::cerr << "[Screen cleared]" << std::endl;
+                    printInfo("Screen cleared");
                     for (Object &obj : objs)
                     {
                         obj.~Object();
@@ -194,7 +204,8 @@ void helloScreen()
     Button playButton {0, 0, env.PLAY_BUTTON_WIDTH, env.PLAY_BUTTON_HEIGHT, &env};
     playButton.centerByX(0, env.SCREEN_WIDTH);
     playButton.centerByY(60, env.SCREEN_HEIGHT);
-    SDL_Texture *playButtonImg = tryLoadTexture(env.PLAY_BUTTON_PATH, renderer);
+    playButton.imgUnpressed = tryLoadTexture(env.PLAY_BUTTON_UNPRESSED_PATH, renderer);
+    playButton.imgPressed = tryLoadTexture(env.PLAY_BUTTON_PRESSED_PATH, renderer);
     SDL_Texture *helloBg = tryLoadTexture(env.BACKGROUND_PATH, renderer);
 
     Text gameText(env.FONT, 30, &env);
@@ -207,7 +218,7 @@ void helloScreen()
     playText.centerByX(playButton.getX(), playButton.getX() + playButton.getW());
     playText.centerByY(playButton.getY(), playButton.getY() + playButton.getH());
 
-    std::cerr << "[Hello screen started]" << std::endl;
+    printInfo("Hello screen started");
 
     while (!exitGame && !continueGame)
     {
@@ -233,7 +244,15 @@ void helloScreen()
 
         renderTexture(helloBg, 0, 0, env.SCREEN_WIDTH, env.SCREEN_HEIGHT, renderer);
 
-        renderTexture(playButtonImg, playButton.getX(), playButton.getY(), playButton.getW(), playButton.getH(), renderer);
+        if (playButton.cursorInside())
+        {
+            renderTexture(playButton.imgPressed, playButton.getX(), playButton.getY(), playButton.getW(), playButton.getH(), renderer);
+
+        }
+        else
+        {
+            renderTexture(playButton.imgUnpressed, playButton.getX(), playButton.getY(), playButton.getW(), playButton.getH(), renderer);
+        }
 
         renderTexture(gameText.texture, gameText.getX(), gameText.getY(), gameText.getW(), gameText.getH(), renderer);
 
@@ -245,7 +264,7 @@ void helloScreen()
 
         SDL_Delay(env.GAME_DELAY);
     }   
-    SDL_DestroyTexture(playButtonImg);
+    playButton.~Button();
     SDL_DestroyTexture(helloBg);
     SDL_RenderClear(renderer);
     SDL_DestroyRenderer(renderer);

@@ -27,3 +27,7 @@ void updateAllAcc(std::vector<Object> &objs, const double G, double PIXELS_IN_UN
 void annulAllAcc(std::vector<Object>&);
 
 void renderTexture(SDL_Texture *what, int xWhere, int yWhere, int wWhat, int hWhat, SDL_Renderer *renderer);
+
+void printInfo(const char t[], ...);
+
+void printError(const char t[], ...);
