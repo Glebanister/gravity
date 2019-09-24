@@ -14,8 +14,8 @@ class Object
   public:
     Object();
     Object(double x, double y, Environment *env);
-    bool onCreate;
     bool movable;
+    bool onCreate;
 
     void render(SDL_Renderer*);
     void updatePhysics();

@@ -1,8 +1,9 @@
-#include "../include/Button.h"
-#include "../include/Functions.h"
+#include "Button.h"
+#include "Functions.h"
 #include <iostream>
 
 Button::Button(){};
+
 Button::Button(int xNew, int yNew, int wNew, int hNew, Environment *envNew)
     : x(xNew), y(yNew), w(wNew), h(hNew), env(envNew), xOfButton(0), yOfButton(0)
 {

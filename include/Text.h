@@ -4,7 +4,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <string>
-#include "../include/Environment.h"
+#include "Environment.h"
 
 class Text
 {

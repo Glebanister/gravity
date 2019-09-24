@@ -1,6 +1,6 @@
-#include "../include/Text.h"
-#include "../include/Environment.h"
-#include "string"
+#include "Text.h"
+#include "Environment.h"
+#include <string>
 #include <iostream>
 
 Text::Text(const char path[], int size, Environment *envNew)

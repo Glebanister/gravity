@@ -4,11 +4,11 @@
 #include <vector>
 #include <algorithm>
 #include <cmath>
-#include "../include/Object.h"
-#include "../include/Functions.h"
-#include "../include/Environment.h"
-#include "../include/Button.h"
-#include "../include/Text.h"
+#include "Object.h"
+#include "Functions.h"
+#include "Environment.h"
+#include "Button.h"
+#include "Text.h"
 
 Environment env;
 SDL_Renderer *renderer;

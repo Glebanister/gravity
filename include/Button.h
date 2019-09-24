@@ -2,7 +2,7 @@
 #define BUTTON_H
 
 #include <SDL2/SDL.h>
-#include "../include/Environment.h"
+#include "Environment.h"
 
 class Button
 {

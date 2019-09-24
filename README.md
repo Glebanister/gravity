@@ -3,15 +3,11 @@
 ***********************
 
 To install:
-
-	-Linux:
-		-install g++
-		-install libsdl2 (apt-get install libsdl2-dev)
-		-install libsdl2-image-dev (apt-get install libsdl2-image-dev)
-		-install libsdl2-ttf-dev (apt-get install libsdl2-ttf-dev)
-		-make -f MakeFile
-	-Windows:
-		-Sorry, but no
+    -install g++
+    -install libsdl2 (apt-get install libsdl2-dev)
+    -install libsdl2-image-dev (apt-get install libsdl2-image-dev)
+    -install libsdl2-ttf-dev (apt-get install libsdl2-ttf-dev)
+    -make -f MakeFile
 
 
 To change settings:

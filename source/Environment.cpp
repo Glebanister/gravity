@@ -2,8 +2,8 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <iostream>
-#include "../include/Environment.h"
-#include "../include/Functions.h"
+#include "Environment.h"
+#include "Functions.h"
 
 Environment::Environment()
 {

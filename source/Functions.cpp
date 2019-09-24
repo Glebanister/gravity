@@ -4,8 +4,8 @@
 #include <SDL2/SDL_ttf.h>
 #include <cmath>
 #include <algorithm>
-#include "../include/Functions.h"
-#include "../include/Object.h"
+#include "Functions.h"
+#include "Object.h"
 
 int getRandInt(int b, int e)
 {
@@ -31,8 +31,8 @@ void blitSurface(SDL_Surface *what, int xWhat, int yWhat, int w, int h, SDL_Surf
 void blitScaled(SDL_Surface *what, int xWhat, int yWhat, int wWhat, int hWhat, SDL_Surface *where)
 {
     SDL_Rect stretchRect;
-    stretchRect.x = 0;
-    stretchRect.y = 0;
+    stretchRect.x = xWhat - xWhat;
+    stretchRect.y = yWhat - yWhat;
     stretchRect.w = wWhat;
     stretchRect.h = hWhat;
     if (SDL_BlitScaled(what, NULL, where, &stretchRect) < 0)
@@ -101,14 +101,6 @@ void DrawCircle(SDL_Renderer *Renderer, int32_t _x, int32_t _y, int32_t radius)
 
 void fillCircle(SDL_Renderer *surface, int cx, int cy, int radius, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
-    // Note that there is more to altering the bitrate of this
-    // method than just changing this value.  See how pixels are
-    // altered at the following web page for tips:
-    //   http://www.libsdl.org/intro.en/usingvideo.html
-    static const int BPP = 4;
-
-    //double ra = (double)radius;
-
     for (double dy = 1; dy <= radius; dy += 1.0)
     {
         // This loop is unrolled a bit, only iterating through half of the
@@ -120,7 +112,6 @@ void fillCircle(SDL_Renderer *surface, int cx, int cy, int radius, Uint8 r, Uint
         // with a center and we need left/right coordinates.
 
         double dx = floor(sqrt((2.0 * radius * dy) - (dy * dy)));
-        int x = cx - dx;
         SDL_SetRenderDrawColor(surface, r, g, b, a);
         SDL_RenderDrawLine(surface, cx - dx, cy + dy - radius, cx + dx, cy + dy - radius);
         SDL_RenderDrawLine(surface, cx - dx, cy - dy + radius, cx + dx, cy - dy + radius);
