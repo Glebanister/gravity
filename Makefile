@@ -1,14 +1,25 @@
-.PHONY = clean all
+.PHONY = clean all debug
 SOURCE = source
 BIN = bin
 INCLUDE = include
 CC = g++
 OBJ_NAME = main
 
+RELEASE_FLAGS = -DNDEBUG -O3
+DEBUG_FLAGS = -g -Wall
 COMPILE_FLAGS = -c -std=c++17 -Wextra -Werror
 LINKER_FLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf
 
+ifeq ($(BUILD), debug)
+COMPILE_FLAGS += $(DEBUG_FLAGS)
+else
+COMPILE_FLAGS += $(RELEASE_FLAGS)
+endif
+
 all: $(OBJ_NAME)
+
+debug:
+	make "BUILD=debug"
 
 $(BIN):
 	mkdir -p $(BIN)
