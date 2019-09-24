@@ -2,12 +2,13 @@
 *_PROD_BY_GLEBANISTER_*
 ***********************
 
-To install:
+To setup:
+
     -install g++
     -install libsdl2 (apt-get install libsdl2-dev)
     -install libsdl2-image-dev (apt-get install libsdl2-image-dev)
     -install libsdl2-ttf-dev (apt-get install libsdl2-ttf-dev)
-    -make -f MakeFile
+    -make
 
 
 To change settings:
