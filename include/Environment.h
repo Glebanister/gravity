@@ -15,8 +15,8 @@ class Environment {
         const char PLAY_BUTTON_UNPRESSED_PATH[33] = "textures/buttonPlayUnpressed.png";
         const char PLAY_BUTTON_PRESSED_PATH[33] = "textures/buttonPlayPressed.png";
         const char FONT[26] = "textures/superfly2001.ttf";
-        const int SCREEN_WIDTH = 800;
-        const int SCREEN_HEIGHT = 600;
+        const int SCREEN_WIDTH = 1200;
+        const int SCREEN_HEIGHT = 900;
         const int GAME_DELAY = 15;
         const int RADIUS = 7;
         const int RED = 255;
@@ -32,7 +32,7 @@ class Environment {
         const double COLLISION_CONTROL = 1000.0;
         const double SPEED_COEFFICENT = 0.1;
         const bool STAY_INSIDE = false;
-        const bool BOUNCES_OFF_THE_WALLS = true;
+        const bool BOUNCES_OFF_THE_WALLS = false;
         const bool PAUSE_INTERACTION = false;
         const bool PAUSE_GAME = true;
 };

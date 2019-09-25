@@ -15,13 +15,7 @@ To change settings:
 
 	-Go to the include/Environment.h
 	-Change anything you want
-	-"make -f MakeFile" to apply changes
-
-
-To change background:
-
-	-Create image corresponding to the window resolution settings
-	-Set up background path
+	-"make" to apply changes
 
 
 To run:
@@ -62,4 +56,4 @@ Settings:
 	STAY_INSIDE = false; - balls staying inside
 	BOUNCES_OFF_THE_WALLS = true balls bouncing off the walls
 	PAUSE_INTERACTION = true; start state of interaction
-    PAUSE_GAME = true; start state of game (paused/unpaused)
+    	PAUSE_GAME = true; start state of game (paused/unpaused)

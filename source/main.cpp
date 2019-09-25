@@ -78,8 +78,6 @@ void mainActivity()
 
     while (!exitGame)
     {
-        // std::cout << exitGame << ' ' << pauseGame << ' ' << pauseInteraction << std::endl;
-        // std::cout << SDL_GetError() << std::endl;
         while (SDL_PollEvent(&ev))
         {
             if (ev.type == SDL_QUIT)
@@ -88,7 +86,6 @@ void mainActivity()
             }
             else if (ev.type == SDL_KEYDOWN)
             {
-                // std::cout << ev.key.keysym.sym << std::endl;
                 if (ev.key.keysym.sym == 100)
                 {
                     if (pauseInteraction)
