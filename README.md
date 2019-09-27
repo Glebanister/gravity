@@ -54,4 +54,4 @@ Settings:
 	STAY_INSIDE = false; - balls staying inside
 	BOUNCES_OFF_THE_WALLS = true balls bouncing off the walls
 	PAUSE_INTERACTION = true; start state of interaction
-    	PAUSE_GAME = true; start state of game (paused/unpaused)
+	PAUSE_GAME = true; start state of game (paused/unpaused)
