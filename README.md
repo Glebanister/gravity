@@ -1,5 +1,5 @@
 ***********************
-**Gravitation simulator**
+# **Gravitation simulator**
 ***********************
 
 To setup:
