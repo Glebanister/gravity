@@ -1,5 +1,5 @@
 ***********************
-*_PROD_BY_GLEBANISTER_*
+**Gravitation simulator**
 ***********************
 
 To setup:
